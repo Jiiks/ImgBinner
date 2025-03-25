@@ -1,0 +1,73 @@
+# Visual Studio specific files
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output folders
+bin/
+obj/
+Debug/
+Release/
+x64/
+x86/
+[A-Za-z]*.cache/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Windows specific files
+Thumbs.db
+Desktop.ini
+
+# Package directories and files
+*.nupkg
+*.snupkg
+packages/
+node_modules/
+
+# Project settings
+*.sqlite
+*.db
+*.DS_Store
+
+# JetBrains Rider IDE specific files
+.idea/
+
+# For C# backup files
+*.swp
+*.bak
+
+# Resharper specific files
+_ReSharper/
+
+# Generated files from NuGet
+*.psmdcp
+*.nuspec
+ProjectName/Packages/*
+
+# Other unnecessary build files
+*.exe
+*.dll
+*.pdb
+*.mdb
+*.ilk
+*.idb
+*.obj
+*.lib
+*.log
+*.cache
+*.class
+
+# Exclude test results
+TestResults/
+
+# Miscellaneous
+*.bak
+*.old
