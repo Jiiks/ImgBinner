@@ -34,8 +34,19 @@ struct Texture2D {
     public uint Texture;
 }
 
-private static IEnumerable<ImgBinEntry> Parseheader(byte[] bytes) {
-    var header = Encoding.ASCII.GetString(bytes);
+private static IEnumerable<ImgBinEntry> Parseheader(byte[] bytes, int headerEnd = 0) {
+    if(headerEnd == 0)
+        headerEnd = Array.IndexOf(bytes, (byte)'$');
+
+    if (headerEnd == -1) {
+        return [];
+    }
+
+    var headerBytes = new byte[headerEnd + 1];
+    Array.Copy(bytes, 0, headerBytes, 0, headerEnd + 1);
+
+
+    var header = Encoding.ASCII.GetString(headerBytes);
     var list = new List<ImgBinEntry>();
     var start = 0;
     while ((start = header.IndexOf('[', start)) != -1) {
@@ -72,15 +83,25 @@ private static IEnumerable<ImgBinEntry> Parseheader(byte[] bytes) {
 }
 
 
-public unsafe static IEnumerable<Texture2D> LoadBinary() {
+public unsafe static IEnumerable<Texture2D> LoadBinary(byte[] bin) {
+    var headerEnd = Array.IndexOf(bin, (byte)'$');
+    if (headerEnd == -1 || headerEnd >= bin.Length - 1) {
+        return [];
+    }
+
+
     List<Texture2D> textures = [];
-    var idx = Resources.imgidx; // Replace with your index location
-    var bytes = Resources.imgbin; // Replace with your binary location
-    var header = Parseheader(idx);
+    // Parse header
+    var header = Parseheader(bin, headerEnd);
+
+    // Get body
+    var bodyLength = bin.Length - (headerEnd + 1);
+    var body = new byte[bodyLength];
+    Array.Copy(bin, headerEnd + 1, body, 0, bodyLength);
 
     foreach (var entry in header) {
         var filebytes = new byte[entry.Length];
-        Array.Copy(bytes, entry.Offset, filebytes, 0, filebytes.Length);
+        Array.Copy(body, entry.Offset, filebytes, 0, filebytes.Length);
 
         fixed (byte* bytePtr = filebytes) {
             var tex = CreateTexture(bytePtr, entry.Width, entry.Height); // Replace with your create texture
