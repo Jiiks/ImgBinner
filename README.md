@@ -6,6 +6,12 @@ Creates an index file with the following format:
 [<filename>@<width>x<height>x<channels>|<offset>^<length>]
 ```
 
+# Rendering is as simple as
+```cs
+var tex = _textures.First(t => t.Name == "textureName");
+ImGui.Image(tex.Texture, new Vector2(128, 128));
+```
+
 # Usage:
 Just drop a folder containing your images on the exe and then in your app:
 
