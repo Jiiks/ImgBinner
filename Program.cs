@@ -91,7 +91,6 @@ public static class Tests {
 }
 
 public unsafe class ImgBinner {
-    public const bool DEBUG = true;
 
     public static void GenerateSource() {
     
@@ -144,7 +143,6 @@ public unsafe class ImgBinner {
         }
         header += '$';
         source += "}\n";
-        Console.WriteLine(source);
         byte[] headerBytes = Encoding.UTF8.GetBytes(header);
         byte[] merged = new byte[headerBytes.Length + tSize];
 
