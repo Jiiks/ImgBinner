@@ -33,7 +33,7 @@ public unsafe class ImgBinner {
             Marshal.Copy((IntPtr)image, data, 0, data.Length);
             tSize += data.Length;
             bytes.Add(data);
-            header += $"[{fn}@{offset}^{data.Length}]";
+            header += $"[{fn}@{x}x{y}x{channelsInFile}|{offset}^{data.Length}]";
             offset += data.Length;
         }
 
